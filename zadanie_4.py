@@ -23,3 +23,13 @@ def wprowadz_liczby():
                 liczby.append(liczba)
         except ValueError:
             print("To nie jest prawidłowa liczba. Spróbuj ponownie.")
+
+def oblicz_sume(liczby):
+    suma =  sum(liczby)
+    return suma
+
+def oblicz_iloczyn(liczby):
+    iloczyn = 1
+    for liczba in liczby:
+        iloczyn = iloczyn * liczba
+    return iloczyn
