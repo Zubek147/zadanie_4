@@ -7,3 +7,19 @@ def wprowadz_liczbe():
             return liczba
         except ValueError:
             print("To nie jest prawidłowa liczba. Spróbuj ponownie.")
+
+def wprowadz_liczby():
+    liczby = []
+    while True:
+        try:
+            wprowadzona_wartosc = input("Wprowadź liczbę lub wpisz 'koniec', aby obliczyć wynik: ")
+            if wprowadzona_wartosc.lower() == 'koniec':
+                if len(liczby) < 2:
+                    print("Potrzebujesz co najmniej dwóch liczb.")
+                else:
+                    return liczby
+            else:
+                liczba = float(wprowadzona_wartosc)
+                liczby.append(liczba)
+        except ValueError:
+            print("To nie jest prawidłowa liczba. Spróbuj ponownie.")
