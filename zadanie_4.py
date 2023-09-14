@@ -34,16 +34,17 @@ def dodawanie():
     logging.info("Wywołuję funkcję dodawanie.")
     liczby = wprowadz_liczby()
     wynik = sum(liczby)
-    logging.info(f"Wynik dodawania to: {wynik}")
-    print(f"Wynik dodawania to: {wynik}")
+    liczby_str = ', '.join(map(str, liczby))
+    logging.info(f"Dodane liczby to: {liczby_str}, wynik dodawania to: {wynik}")
+    print(f"Dodane liczby to: {liczby_str}, wynik dodawania to: {wynik}")
     
 def odejmowanie():
     logging.info("Wywołuję funkcję odejmowanie.")
     x = wprowadz_liczbe()
     y = wprowadz_liczbe()
     wynik = x - y
-    logging.info(f"Wynik odejmowania to: {wynik}")
-    print(f"Wynik odejmowania to: {wynik}")
+    logging.info(f"Pierwsza liczba to: {x}, liczba odejmowana to: {y}, wynik odejmowania to: {wynik}")
+    print(f"Pierwsza liczba to: {x}, liczba odejmowana to: {y}, wynik odejmowania to: {wynik}")
     
 def mnozenie():
     logging.info("Wywołuję funkcję mnożenia")
@@ -57,22 +58,31 @@ def mnozenie():
 
         for liczba in liczby:
             wynik *= liczba
-    logging.info(f"Wynik mnożenia to: {wynik}")        
-    print(f"Wynik mnożenia to: {wynik}")
+            liczby_str = ', '.join(map(str, liczby))
+    logging.info(f"Liczby które zostały przemnożone to: {liczby_str}, wynik mnożenia to: {wynik}")        
+    print(f"Liczby które zostały przemnożone to: {liczby_str}, wynik mnożenia to: {wynik}")
 
 def dzielenie():
     logging.info("Wywołuję funkcję dzielenia")
     x = wprowadz_liczbe()
-    y = wprowadz_liczbe()
-    if y != 0:
-        wynik = x / y
-        logging.info(f"Wynik dzielenia to: {wynik}")
-        print(f"Wynik dzielenia to: {wynik}")
-    else:
-        logging.error("Nie można dzielić przez zero")
-        print("Nie można dzielić przez zero")
+
+    while True:
+        y = wprowadz_liczbe()
+        if y != 0:
+            try:
+                wynik = x / y
+                logging.info(f"Liczba Dzielna to: {x}, dzielnik to: {y}, wynik dzielenia to: {wynik}")
+                print(f"Liczba Dzielna to: {x}, dzielnik to: {y}, wynik dzielenia to: {wynik}")
+                break
+            except ValueError as e:
+                logging.error(e)
+                print(e)
+        else:
+            print("Nie można dzielić przez zero, podaj poprawną wartość")
+
 
 def zakoncz_program():
+    logging.info("Wybrano zakończenie programu")
     exit()
 
 def kalkulator():
@@ -96,6 +106,9 @@ def kalkulator():
 
         operacja = operacje.get(wybor)
         if operacja:
+            if wybor in ('1', '2', '3', '4', '5'):
+                print(f"Wybrałeś {operacje[wybor].__name__.capitalize()}.")
+                logging.info(f"Wybrałeś {operacje[wybor].__name__.capitalize()}.")
             operacja()
         else:
             print("Nieprawidłowy wybór!")
