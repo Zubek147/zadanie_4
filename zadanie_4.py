@@ -34,3 +34,10 @@ def dodawanie():
     print(f"Wynik dodawania to: {wynik}")
     logging.info((f"Wynik dodawania to: {wynik}"))
 
+def odejmowanie():
+    logging.info("Wywołuję funkcję odejmowanie.")
+    x = wprowadz_liczbe("Podaj pierwszą liczbę: ")
+    y = wprowadz_liczbe("Podaj drugą liczbę: ")
+    wynik = x - y
+    print(f"Wynik odejmowania to: {wynik}")
+    logging.info((f"Wynik odejmowania to: {wynik}"))
