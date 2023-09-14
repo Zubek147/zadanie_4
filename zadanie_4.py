@@ -57,3 +57,15 @@ def mnozenie():
     logging.info(f"Wynik mnożenia to: {wynik}")        
     print(f"Wynik mnożenia to: {wynik}")
 
+def dzielenie():
+    x = wprowadz_liczbe("Podaj pierwszą liczbę: ")
+    y = wprowadz_liczbe("Podaj drugą liczbę: ")
+    if y != 0:
+        wynik = x / y
+        logging.info(f"Wynik dzielenia to: {wynik}")
+        print(f"Wynik dzielenia to: {wynik}")
+    else:
+        logging.error("Nie można dzielić przez zero")
+        print("Nie można dzielić przez zero")
+
+    
