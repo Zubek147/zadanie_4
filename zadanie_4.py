@@ -1,5 +1,9 @@
 #Zadanie z 4 modułu - kalkulator
 import logging
+log_directory = "C:\\Kodilla\\kurs_python\\Modul 4\\Zad_4"
+
+log_file = f"{log_directory}/kalkulator.log"
+
 logging.basicConfig(filename='kalkulator.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger()
 
@@ -32,6 +36,7 @@ def wprowadz_liczby():
 
 def dodawanie():
     logging.info("Wywołuję funkcję dodawanie.")
+    print("Wywołuję funkcję dodawanie.")
     liczby = wprowadz_liczby()
     wynik = sum(liczby)
     liczby_str = ', '.join(map(str, liczby))
@@ -40,6 +45,7 @@ def dodawanie():
     
 def odejmowanie():
     logging.info("Wywołuję funkcję odejmowanie.")
+    print("Wywołuję funkcję odejmowanie.")
     x = wprowadz_liczbe()
     y = wprowadz_liczbe()
     wynik = x - y
@@ -48,6 +54,7 @@ def odejmowanie():
     
 def mnozenie():
     logging.info("Wywołuję funkcję mnożenia")
+    print("Wywołuję funkcję mnożenia")
     liczby = wprowadz_liczby()
 
     if len(liczby) <2:
@@ -64,25 +71,26 @@ def mnozenie():
 
 def dzielenie():
     logging.info("Wywołuję funkcję dzielenia")
+    print("Wywołuję funkcję dzielenia")
     x = wprowadz_liczbe()
 
     while True:
         y = wprowadz_liczbe()
-        if y != 0:
-            try:
-                wynik = x / y
-                logging.info(f"Liczba Dzielna to: {x}, dzielnik to: {y}, wynik dzielenia to: {wynik}")
-                print(f"Liczba Dzielna to: {x}, dzielnik to: {y}, wynik dzielenia to: {wynik}")
-                break
-            except ValueError as e:
-                logging.error(e)
-                print(e)
-        else:
+        try:
+            wynik = x / y
+            if y == 0:
+                raise ZeroDivisionError("Nie można dzielić przez zero, podaj poprawną wartość")
+            logging.info(f"Liczba Dzielna to: {x}, dzielnik to: {y}, wynik dzielenia to: {wynik}")
+            print(f"Liczba Dzielna to: {x}, dzielnik to: {y}, wynik dzielenia to: {wynik}")
+            break
+        except (ZeroDivisionError, Exception):
+            logging.error("Nie można dzielić przez zero, podaj poprawną wartość")
             print("Nie można dzielić przez zero, podaj poprawną wartość")
 
 
 def zakoncz_program():
     logging.info("Wybrano zakończenie programu")
+    print("Wybrano zakończenie programu")
     exit()
 
 def kalkulator():
@@ -106,9 +114,6 @@ def kalkulator():
 
         operacja = operacje.get(wybor)
         if operacja:
-            if wybor in ('1', '2', '3', '4', '5'):
-                print(f"Wybrałeś {operacje[wybor].__name__.capitalize()}.")
-                logging.info(f"Wybrałeś {operacje[wybor].__name__.capitalize()}.")
             operacja()
         else:
             print("Nieprawidłowy wybór!")
