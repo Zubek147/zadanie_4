@@ -27,3 +27,10 @@ def wprowadz_liczby():
             logging.error("To nie jest prawidłowa liczba. Spróbuj ponownie.")
             print("To nie jest prawidłowa liczba. Spróbuj ponownie.")
 
+def dodawanie():
+    logging.info("Wywołuję funkcję dodawanie.")
+    liczby = wprowadz_liczby()
+    wynik = sum(liczby)
+    print(f"Wynik dodawania to: {wynik}")
+    logging.info((f"Wynik dodawania to: {wynik}"))
+
