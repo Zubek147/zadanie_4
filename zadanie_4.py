@@ -1,5 +1,8 @@
 #Zadanie z 4 modułu - kalkulator
 import logging
+logging.basicConfig(filename='kalkulator.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger()
+
 def wprowadz_liczbe():
     while True:
         try:
@@ -36,8 +39,8 @@ def dodawanie():
     
 def odejmowanie():
     logging.info("Wywołuję funkcję odejmowanie.")
-    x = wprowadz_liczbe("Podaj pierwszą liczbę: ")
-    y = wprowadz_liczbe("Podaj drugą liczbę: ")
+    x = wprowadz_liczbe()
+    y = wprowadz_liczbe()
     wynik = x - y
     logging.info(f"Wynik odejmowania to: {wynik}")
     print(f"Wynik odejmowania to: {wynik}")
@@ -58,8 +61,9 @@ def mnozenie():
     print(f"Wynik mnożenia to: {wynik}")
 
 def dzielenie():
-    x = wprowadz_liczbe("Podaj pierwszą liczbę: ")
-    y = wprowadz_liczbe("Podaj drugą liczbę: ")
+    logging.info("Wywołuję funkcję dzielenia")
+    x = wprowadz_liczbe()
+    y = wprowadz_liczbe()
     if y != 0:
         wynik = x / y
         logging.info(f"Wynik dzielenia to: {wynik}")
@@ -68,4 +72,33 @@ def dzielenie():
         logging.error("Nie można dzielić przez zero")
         print("Nie można dzielić przez zero")
 
-    
+def zakoncz_program():
+    exit()
+
+def kalkulator():
+    operacje = {
+        '1' : dodawanie,
+        '2' : odejmowanie,
+        '3' : mnozenie,
+        '4' : dzielenie,
+        '5' : zakoncz_program
+    }   
+
+    while True:
+        print("\nPodaj działanie posługując się odpowiednią liczbą:")
+        print("1. Dodawanie")
+        print("2. Odejmowanie")
+        print("3. Mnożenie")
+        print("4. Dzielenie")
+        print("5. Zakończ program")
+
+        wybor = input("Twój wybór: ")
+
+        operacja = operacje.get(wybor)
+        if operacja:
+            operacja()
+        else:
+            print("Nieprawidłowy wybór!")
+
+if __name__ == '__main__':
+    kalkulator()
