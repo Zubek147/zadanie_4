@@ -1,7 +1,6 @@
-#Zadanie z 4 modułu - kalkulator
 import logging
 
-log_directory = "C:\\Kodilla\\kurs_python\\Modul 4\\Zad_4\\Poprawka"
+log_directory = "C:\\Kodilla\\kurs_python\\Modul 4\\Zad_4"
 
 log_file = f"{log_directory}/kalkulator.log"
 
@@ -32,20 +31,62 @@ def mnozenie(*args):
         print(f"Liczby które zostały przemnożone to: {liczby_str}, wynik mnożenia to: {wynik}")
 
 def dzielenie(x, y):
-    try:
-        wynik = x / y
-        if y == 0:
-            raise ZeroDivisionError("Nie można dzielić przez zero, podaj poprawną wartość")
-        logger.info(f"Liczba Dzielna to: {x}, dzielnik to: {y}, wynik dzielenia to: {wynik}")
-        print(f"Liczba Dzielna to: {x}, dzielnik to: {y}, wynik dzielenia to: {wynik}")
-    except (ZeroDivisionError, Exception):
-        logger.error("Nie można dzielić przez zero, podaj poprawną wartość")
-        print("Nie można dzielić przez zero, podaj poprawną wartość")
+    while True:
+        try:
+            wynik = x / y
+            if y == 0:
+                raise ZeroDivisionError("Nie można dzielić przez zero, podaj poprawną wartość")
+            logger.info(f"Liczba Dzielna to: {x}, dzielnik to: {y}, wynik dzielenia to: {wynik}")
+            print(f"Liczba Dzielna to: {x}, dzielnik to: {y}, wynik dzielenia to: {wynik}")
+            break
+        except (ZeroDivisionError, ValueError):
+            logger.error("Nie można dzielić przez zero, podaj poprawną wartość")
+            print("Nie można dzielić przez zero, podaj poprawną wartość")
+            y = pobierz_liczbe()
 
 def zakoncz_program():
     logger.info("Wybrano zakończenie programu")
     print("Wybrano zakończenie programu")
     exit()
+
+def pobierz_liczbe():
+    while True:
+        wprowadzona_wartosc = input("Wprowadź liczbę lub wpisz 'koniec', aby obliczyć wynik: ")
+        if wprowadzona_wartosc.lower() == 'koniec':
+            return None
+        elif wprowadzona_wartosc.replace('.', '').replace('-', '').isdigit():
+            return float(wprowadzona_wartosc)
+        else:
+            logger.error("To nie jest prawidłowa liczba. Spróbuj ponownie.")
+            print("To nie jest prawidłowa liczba. Spróbuj ponownie.")
+
+def wyswietl_menu():
+    print("\nPodaj działanie posługując się odpowiednią liczbą:")
+    print("1. Dodawanie")
+    print("2. Odejmowanie")
+    print("3. Mnożenie")
+    print("4. Dzielenie")
+    print("5. Zakończ program")
+
+def wykonaj_operacje(operacje, wybor):
+    if wybor in operacje:
+        if wybor in {'1', '3'}:
+            liczby = []
+            while True:
+                liczba = pobierz_liczbe()
+                if liczba is not None:
+                    liczby.append(liczba)
+                else:
+                    break
+            if len(liczby) >= 2:
+                operacje.get(wybor)(*liczby)
+        else:
+            x = pobierz_liczbe()
+            y = pobierz_liczbe()
+            if x is not None and y is not None:
+                operacje.get(wybor)(x, y)
+    else:
+        print("Nieprawidłowy wybór!")
 
 def kalkulator():
     operacje = {
@@ -57,41 +98,14 @@ def kalkulator():
     }
 
     while True:
-        print("\nPodaj działanie posługując się odpowiednią liczbą:")
-        print("1. Dodawanie")
-        print("2. Odejmowanie")
-        print("3. Mnożenie")
-        print("4. Dzielenie")
-        print("5. Zakończ program")
+        wyswietl_menu()
 
         wybor = input("Twój wybór: ")
 
         if wybor == '5':
             operacje[wybor]()
-        elif wybor in {'1', '2', '3', '4'}:
-            if wybor in {'1', '3'}:
-                liczby = []
-                while True:
-                    wprowadzona_wartosc = input("Wprowadź liczbę lub wpisz 'koniec', aby obliczyć wynik: ")
-                    if wprowadzona_wartosc.lower() == 'koniec':
-                        if len(liczby) < 2:
-                            logger.error("Potrzebujesz co najmniej dwóch liczb.")
-                            print("Potrzebujesz co najmniej dwóch liczb.")
-                        else:
-                            operacje.get(wybor)(*liczby)
-                            break
-                    elif wprowadzona_wartosc.isdigit():
-                        liczba = float(wprowadzona_wartosc)
-                        liczby.append(liczba)
-                    else:
-                        logger.error("To nie jest prawidłowa liczba. Spróbuj ponownie.")
-                        print("To nie jest prawidłowa liczba. Spróbuj ponownie.")
-            else:
-                x = float(input("Wprowadź pierwszą liczbę: "))
-                y = float(input("Wprowadź drugą liczbę: "))
-                operacje.get(wybor)(x, y)
         else:
-            print("Nieprawidłowy wybór!")
+            wykonaj_operacje(operacje, wybor)
 
 if __name__ == '__main__':
     kalkulator()
